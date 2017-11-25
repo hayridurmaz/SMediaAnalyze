@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.*;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     static TextView outputText;
     static EditText inputText;
     static Button searchButton;
+    static ArrayList<Tweet> tweetsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     List<Status> tweets = result.getTweets();
 
                     for (Status tweet : tweets) {
+                        tweetsList.add(new Tweet(tweet.getText(), 0));
                         String a = outputText.getText() + "\n@" + tweet.getUser().getScreenName() + ":" + tweet.getText();
                         outputText.setText(a);
                     }
