@@ -12,43 +12,45 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <Button
             android:id="@+id/SearchButton"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/Widget.AppCompat.NotificationActionContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/OutputText"
+            android:layout_below="@+id/InputText"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="49dp"
+            android:layout_marginTop="14dp"
             android:background="@android:drawable/alert_dark_frame"
             android:text="Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/InputText"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <TextView
             android:id="@+id/OutputText"
             android:layout_width="150dp"
             android:layout_height="100dp"
+            android:layout_below="@+id/InputText"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="134dp"
             android:text="Percentage" />
 
         <EditText
             android:id="@+id/InputText"
-            android:layout_width="wrap_content"
+            style="?attr/editTextStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="14dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="Enter input" />
 
     </RelativeLayout>
 
