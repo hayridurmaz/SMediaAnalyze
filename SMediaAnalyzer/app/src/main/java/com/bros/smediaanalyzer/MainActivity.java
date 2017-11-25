@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView t1;
-        t1 = (TextView) findViewById(R.id.ttt);
+        t1 = (TextView) findViewById(R.id.OutputText);
 
         try {
             // The factory instance is re-useable and thread safe.
