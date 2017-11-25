@@ -1,4 +1,6 @@
-import com.bros.smediaanalyzer.Sentence;
+
+import com.bros.smediaanalyzer.Topic;
+import com.bros.smediaanalyzer.Tweet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +33,7 @@ public class SentimentAnalyzer {
     public static String endpoint = "https://svc02.api.bitext.com/sentiment/";
     public static String textdata = "{\"language\":\"" + "eng" + "\",\"text\":\"" + user_text + "\"}";
 
-    SentimentAnalyzer() throws Exception {
+    SentimentAnalyzer(Tweet tweet) throws Exception {
 
         // Sending the POST request
         URL urlPOST = new URL(endpoint);
@@ -97,9 +99,9 @@ public class SentimentAnalyzer {
                 JSONArray subObject = jsonObject.optJSONArray("sentimentanalysis");
                 for(int i = 0; i < subObject.length(); i++){
                     double pol = Double.parseDouble(subObject.getJSONObject(i).get("score").toString());
-                    String val = subObject.getJSONObject(i).get("sentence").toString();
                     String top = subObject.getJSONObject(i).get("topic").toString();
-                    Sentence sentence = new Sentence(val,top,pol);
+                    Topic topic = new Topic(top,pol);
+                    tweet.topics.add(topic);
 
                 }
 

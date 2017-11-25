@@ -4,12 +4,11 @@ package com.bros.smediaanalyzer;
  * Created by Hayri Durmaz on 26.11.2017.
  */
 
-public class Sentence {
-    String value, topic;
+public class Topic {
+    String topic;
     double polarity;
 
-    public Sentence(String value, String topic, double polarity) {
-        this.value = value;
+    public Topic(String topic, double polarity) {
         this.topic = topic;
         this.polarity = polarity;
     }

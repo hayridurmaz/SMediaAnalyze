@@ -10,13 +10,13 @@ import java.util.List;
 public class Tweet implements Comparable<Tweet>{
     String comment;
     double polarity;
-    ArrayList<Sentence> sentences;
+    public ArrayList<Topic> topics;
 
 
     public Tweet (String comment1, double polarity1) {
         comment = comment1;
         polarity = polarity1;
-        sentences= new ArrayList<Sentence>();
+        topics= new ArrayList<Topic>();
     }
 
     public void setPolarity (double polarity1) {
