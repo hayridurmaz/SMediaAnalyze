@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                     Query query = new Query((inputText.getText()).toString());
-
+                    query.setCount(100);
                     QueryResult result = (twitterConnection()).search(query);
                     List<Status> tweets = result.getTweets();
 
