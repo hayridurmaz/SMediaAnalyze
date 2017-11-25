@@ -19,13 +19,13 @@
 
         <Button
             android:id="@+id/SearchButton"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/AppTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/OutputText"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="49dp"
-            android:background="@android:drawable/alert_dark_frame"
+            android:background="@android:color/background_light"
             android:text="Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/InputText"
