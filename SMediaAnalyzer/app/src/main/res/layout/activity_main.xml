@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/TextView"
+            android:id="@+id/OutputText"
             android:layout_width="150dp"
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
