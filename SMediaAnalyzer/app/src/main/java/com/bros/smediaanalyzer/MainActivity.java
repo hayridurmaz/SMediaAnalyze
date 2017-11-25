@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
         searchButton = (Button) findViewById(R.id.SearchButton);
 
-
+        
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
-
+                    outputText.setText("");
+                    tweetsList = new ArrayList<Tweet>();
                     Query query = new Query((inputText.getText()).toString());
                     query.setCount(100);
                     QueryResult result = (twitterConnection()).search(query);
@@ -62,11 +63,9 @@ public class MainActivity extends AppCompatActivity {
                         String a = outputText.getText() + "\n@" + tweet.getUser().getScreenName() + ":" + tweet.getText();
                         outputText.setText(a);
                     }
-
                 }
+                catch (Exception e) {
 
-                catch (TwitterException e) {
-                    
                 }
             }
         });
