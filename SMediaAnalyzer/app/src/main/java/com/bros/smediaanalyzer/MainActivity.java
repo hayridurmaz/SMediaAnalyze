@@ -39,10 +39,5 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
-
-
     }
 }
