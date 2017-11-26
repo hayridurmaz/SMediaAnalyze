@@ -5,12 +5,13 @@ package com.bros.smediaanalyzer;
  */
 
 public class Topic {
-    String topic;
-    double polarity;
+    public String topic;
+    public double polarity;
 
     public Topic(String topic, double polarity) {
         this.topic = topic;
         this.polarity = polarity;
     }
+
 
 }

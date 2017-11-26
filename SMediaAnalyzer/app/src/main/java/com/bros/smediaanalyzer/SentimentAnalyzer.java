@@ -1,3 +1,4 @@
+package com.bros.smediaanalyzer;
 
 import com.bros.smediaanalyzer.Topic;
 import com.bros.smediaanalyzer.Tweet;
@@ -23,17 +24,23 @@ import java.net.URL;
 
 public class SentimentAnalyzer {
     // User token, required for API access
-    public static String oauth_token = "4a88c84113584c2b9887de8df77bdcc6";
+    public static String oauth_token;
 
     // API request data: Language and text to be analyzed
-    public static String user_language = "eng";
-    public static String user_text = "your house is good and the street is bad.";
+    public static String user_language;
+    public static String user_text;
 
     // Building the POST request to Sentiment analysis endpoint
-    public static String endpoint = "https://svc02.api.bitext.com/sentiment/";
-    public static String textdata = "{\"language\":\"" + "eng" + "\",\"text\":\"" + user_text + "\"}";
+    public static String endpoint;
+    public static String textdata;
 
-    SentimentAnalyzer(Tweet tweet) throws Exception {
+    public SentimentAnalyzer(Tweet tweet) throws Exception {
+        oauth_token = "4a88c84113584c2b9887de8df77bdcc6";
+        user_language = "eng";
+        user_text = tweet.comment;
+        endpoint = "https://svc02.api.bitext.com/sentiment/";
+        textdata = "{\"language\":\"" + "eng" + "\",\"text\":\"" + user_text + "\"}";
+
 
         // Sending the POST request
         URL urlPOST = new URL(endpoint);
