@@ -10,10 +10,13 @@ import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.Key;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Double polarityOfSearch;
     String output;
     Query query;
+    static ImageView downImage, upImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -57,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
         searchButton = (Button) findViewById(R.id.SearchButton);
 
+        downImage = (ImageView) findViewById(R.id.DownImage);
+        upImage = (ImageView) findViewById(R.id.UpImage);
+
+        downImage.setVisibility(View.INVISIBLE);
+        upImage.setVisibility(View.INVISIBLE);
+
         topicCountHashMap= new HashMap<>();
         topicPolarityHashMap= new HashMap<>();
         
@@ -64,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    downImage.setVisibility(View.INVISIBLE);
+                    upImage.setVisibility(View.INVISIBLE);
+
                     outputText.setText("Yükleniyor...");
                     tweetsList = new ArrayList<Tweet>();
                     query = new Query((inputText.getText()).toString());
@@ -78,20 +91,27 @@ public class MainActivity extends AppCompatActivity {
                                 int count=0;
                                 System.out.println("Tweets size "+tweets.size());
                                 for (Status tweet : tweets) {
-                                    if(tweet.isRetweet() || !tweet.getLang().equals("en") ){
+                                    if(!tweet.getLang().equals("en") || tweet.isRetweet()){
                                         continue;
                                     }
                                     System.out.println("Tweet text:"+tweet.getText());
                                     Tweet tweet1 = new Tweet(tweet.getText());
                                     //tweet1.setPolarity();
-                                    for (Topic topic : tweet1.topics){
+                                    /*for (Topic topic : tweet1.topics){
                                         setTopicHashMap(topic);
-                                    }
+                                    }*/
                                     tweetsList.add(tweet1);
                                     if(tweetsList.size()>100){
                                         break;
                                     }
 
+                                }
+                                for (int i=0; i<tweetsList.size();i++){
+                                    //SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer(tweetsList.get(i));
+                                    tweetsList.get(i).setKutup();
+                                    for (Topic topic : tweetsList.get(i).topics){
+                                        setTopicHashMap(topic);
+                                    }
                                 }
                                 System.out.println("tweetList size: "+tweetsList.size());
                                 polarityOfSearch=PolarityOfSearch();
@@ -103,12 +123,23 @@ public class MainActivity extends AppCompatActivity {
                                     public void run() {
 
                                         //String a = outputText.getText() + "\n@" + tweet.getUser().getScreenName() + ":" + tweet.getText();
-                                        output="People ";
-                                        if(polarityOfSearch<0){
-                                            output+=" do not ";
+                                        NumberFormat formatter = new DecimalFormat("#0.00");
+
+                                        output=formatter.format(((polarityOfSearch*100)+100)/2)+"% of  ";
+
+                                        if (polarityOfSearch < 0) {
+                                            downImage.setVisibility(View.VISIBLE);
                                         }
-                                        output+=" like "+ inputText.getText().toString() +" at the rate of: "+polarityOfSearch+"\n";
+
+                                        if (polarityOfSearch >= 0) {
+                                            upImage.setVisibility(View.VISIBLE);
+                                        }
+
+                                        output+=" comments about "+ inputText.getText().toString() +" are positive.";
+
+                                        /*
                                         for(String currentKey : topTopicsHashMap.keySet()){
+
                                             double currentPolarity = topTopicsHashMap.get(currentKey);
                                             output+="People generally ";
                                             if(currentPolarity<0){
@@ -116,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                             output+=" like "+currentKey+" about this product at the rate of "+currentPolarity+"\n";
                                         }
+                                        */
                                         outputText.setText(output);
                                     }
                                 });
@@ -163,13 +195,19 @@ public class MainActivity extends AppCompatActivity {
     }
     public static double PolarityOfSearch(){ //hashmap-her topic için count, count>10 tut.
         double sum=0;
+        int count=0;
         for(int i=0;i<tweetsList.size();i++){
-            sum+=tweetsList.get(i).polarity;
+            if(!Double.isNaN(tweetsList.get(i).polarity)){
+                sum+=tweetsList.get(i).polarity;
+                count++;
+            }
+
         }
         if(tweetsList==null || tweetsList.size()==0){
             return 0;
         }
-        return sum/tweetsList.size();
+        System.out.println("*******sum "+sum + " tweetslist size"+tweetsList.size());
+        return sum/count;
     }
     public static void setTopicHashMap(Topic topic){
         if(topicCountHashMap.containsKey(topic.topic)){
