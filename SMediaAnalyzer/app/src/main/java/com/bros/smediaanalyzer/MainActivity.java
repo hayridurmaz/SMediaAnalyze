@@ -97,6 +97,28 @@ public class MainActivity extends AppCompatActivity {
                                 polarityOfSearch=PolarityOfSearch();
                                 System.out.println("POLARITY"+polarityOfSearch);
                                 findTopTenTopics();
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        //String a = outputText.getText() + "\n@" + tweet.getUser().getScreenName() + ":" + tweet.getText();
+                                        output="People ";
+                                        if(polarityOfSearch<0){
+                                            output+=" do not ";
+                                        }
+                                        output+=" like "+ inputText.getText().toString() +" at the rate of: "+polarityOfSearch+"\n";
+                                        for(String currentKey : topTopicsHashMap.keySet()){
+                                            double currentPolarity = topTopicsHashMap.get(currentKey);
+                                            output+="People generally ";
+                                            if(currentPolarity<0){
+                                                output+=" do not ";
+                                            }
+                                            output+=" like "+currentKey+" about this product at the rate of "+currentPolarity+"\n";
+                                        }
+                                        outputText.setText(output);
+                                    }
+                                });
                             }
                             catch (Exception e){
 
@@ -108,21 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    //String a = outputText.getText() + "\n@" + tweet.getUser().getScreenName() + ":" + tweet.getText();
-                    output="People ";
-                    if(polarityOfSearch<0){
-                        output+=" do not ";
-                    }
-                    output+=" like "+ inputText.getText().toString() +" at the rate of: "+polarityOfSearch+"\n";
-                    for(String currentKey : topTopicsHashMap.keySet()){
-                        double currentPolarity = topTopicsHashMap.get(currentKey);
-                        output+="People generally ";
-                        if(currentPolarity<0){
-                            output+=" do not ";
-                        }
-                        output+=" like "+currentKey+" about this product at the rate of "+currentPolarity+"\n";
-                    }
-                    outputText.setText(output);
 
                 }
                 catch (Exception e) {
